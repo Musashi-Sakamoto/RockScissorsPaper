@@ -6,7 +6,7 @@ import closeIcon from '../../icons/closeIcon.png';
 
 import './InfoBar.css';
 
-const InfoBar = ({ room, users }) => (
+const InfoBar = ({ room, users, name }) => (
   <div className="infoBar">
     <div className="leftInnerContainer">
       <img className="onlineIcon" src={onlineIcon} alt="online icon" />
@@ -16,7 +16,7 @@ const InfoBar = ({ room, users }) => (
       {users.map((user) => (
         <Fragment key={user.name}>
           <img className="offlineIcon" src={user.isDecided ? onlineIcon : offlineIcon} alt="offline icon" />
-          <h3 className="username">{user.name}</h3>
+          <h3 className="username">{user.name === name ? `${user.name}(You)` : user.name}</h3>
         </Fragment>
       ))}
       <a href="/"><img src={closeIcon} alt="close icon" /></a>

@@ -6,6 +6,10 @@
   background-color: #1A1A1D;
 }
 
+.textAlignCenter {
+  text-align: center;
+}
+
 .container {
   display: flex;
   flex-direction: column;
