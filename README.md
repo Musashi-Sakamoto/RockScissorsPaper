@@ -1,7 +1,8 @@
 # Rock Scissors Paper
 [![Image from Gyazo](https://i.gyazo.com/6bf2a19b916e7c12d9cda6fb446b468a.png)](https://gyazo.com/6bf2a19b916e7c12d9cda6fb446b468a)
 
-### [Live Site](https://realtime-chat-application.netlify.com)
+### [Live Site](https://frosty-wozniak-9e9679.netlify.app)
+(You need at least more than or equal to 2 players)
 
 ## Introduction
 This is a code repository for Rock Scissors Paper. 
