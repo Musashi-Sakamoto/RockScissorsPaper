@@ -2,8 +2,10 @@ const http = require('http');
 const express = require('express');
 const socketio = require('socket.io');
 const cors = require('cors');
+const _ = require('lodash');
 
-const { addUser, removeUser, getUser, getUsersInRoom } = require('./users');
+const { addUser, removeUser, getUser, getUsersInRoom, updateUser } = require('./users');
+const { addMessage, removeMessage, getMessagesInRoom } = require('./messages');
 
 const router = require('./router');
 
@@ -22,9 +24,6 @@ io.on('connect', (socket) => {
 
     socket.join(user.room);
 
-    socket.emit('message', { user: 'admin', text: `${user.name}, welcome to room ${user.room}.`});
-    socket.broadcast.to(user.room).emit('message', { user: 'admin', text: `${user.name} has joined!` });
-
     io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
 
     callback();
@@ -32,8 +31,43 @@ io.on('connect', (socket) => {
 
   socket.on('sendMessage', (message, callback) => {
     const user = getUser(socket.id);
+    const users = getUsersInRoom(user.room);
+    updateUser(socket.id);
+    io.to(user.room).emit('roomData', { room: user.room, users });
+    addMessage({ username: user.name, roomId: user.room, message });
 
-    io.to(user.room).emit('message', { user: user.name, text: message });
+    if (getMessagesInRoom(user.room).length === users.length) {
+      users.forEach(user => {
+        console.log('user: ', user)
+        delete user.isDecided
+      })
+      io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
+
+      const messages = getMessagesInRoom(user.room);
+      removeMessage()
+      const messagesResult = _(messages)
+        .map(e => e.message)
+        .uniq()
+        .sort()
+        .value()
+      console.log(messagesResult)
+      const isEven = messagesResult.length === 2 ? false : true;
+      let winner = null;
+      if (!isEven) {
+        if (!messagesResult.some(e => e === 'rock')) {
+          winner = 'scissors';
+        } else if(!messagesResult.some(e => e === 'scissors')) {
+          winner = 'paper';
+        } else {
+          winner = 'rock';
+        }
+      }
+      
+      messages.forEach(message => {
+        console.log(winner);
+        io.to(message.roomId).emit('message', { user: message.username, text: isEven ? 'draw' : winner === message.message ? 'winner' : 'loser' });
+      });
+    }
 
     callback();
   });
