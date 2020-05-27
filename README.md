@@ -1,5 +1,5 @@
 # Rock Scissors Paper
-![Chat Application](https://i.ytimg.com/vi/ZwFA3YMfkoc/maxresdefault.jpg)
+[![Image from Gyazo](https://i.gyazo.com/6bf2a19b916e7c12d9cda6fb446b468a.png)](https://gyazo.com/6bf2a19b916e7c12d9cda6fb446b468a)
 
 ### [Live Site](https://realtime-chat-application.netlify.com)
 
