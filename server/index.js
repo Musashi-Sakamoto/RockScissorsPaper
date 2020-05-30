@@ -65,7 +65,7 @@ io.on('connect', (socket) => {
       
       messages.forEach(message => {
         console.log(message);
-        io.to(message.roomId).emit('message', { user: message.username, text: isEven ? 'draw' : winner === message.message ? 'winner' : 'loser' });
+        io.to(message.roomId).emit('message', { user: message.username, message: message.message, text: isEven ? 'draw' : winner === message.message ? 'winner' : 'loser' });
       });
     }
 
@@ -76,7 +76,6 @@ io.on('connect', (socket) => {
     const user = removeUser(socket.id);
 
     if(user) {
-      io.to(user.room).emit('message', { user: 'Admin', text: `${user.name} has left.` });
       io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room)});
     }
   })

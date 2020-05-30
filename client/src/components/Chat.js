@@ -29,10 +29,10 @@ const Chat = ({ location }) => {
   const [room, setRoom] = useState('');
   const [name, setName] = useState('');
   const [users, setUsers] = useState('');
+  const [messages, setMessages] = useState([]);
   const [decided, setDecided] = useState(false);
   const [result, setResult] = useState(null);
-  // const ENDPOINT = 'https://rock-scissors-paper-634.herokuapp.com/';
-  const ENDPOINT = 'localhost:5000/'
+  const ENDPOINT = 'https://rock-scissors-paper-634.herokuapp.com/';
 
   useEffect(() => {
     const { name, room } = queryString.parse(location.search);
@@ -44,7 +44,7 @@ const Chat = ({ location }) => {
 
     socket.on('message', (message) => {
       console.log('result', message, name)
-
+      setMessages(oldArray => [...oldArray, message])
       if (message.user === name && (message.text === 'draw' || message.text === 'winner' || message.text === 'loser')) {
         console.log('result', message.text)
         setResult(message.text);
@@ -75,22 +75,46 @@ const Chat = ({ location }) => {
   const handleClose = () => {
     setResult(null);
     setDecided(false);
+    setMessages([])
   };
+
+  const emoji = (text) => {
+    switch(text) {
+      case 'rock':
+        return '✊';
+        break;
+      case 'scissors':
+        return '✌';
+        break;
+      case 'paper':
+        return '✋';
+        break;
+    }
+  }
 
   return (
     <>
       <Dialog fullWidth onClose={handleClose} aria-labelledby="simple-dialog-title" open={result !== null}>
         <DialogTitle id="simple-dialog-title">
           <Typography variant='h4' className={classes.dialog}>
-            {result === 'draw' ? 'Tie game!!' : result === 'loser' ? 'You lost the game!' : result === 'winner' ? 'You won the game.' : null}
+            {result === 'draw' ? 'Tie game🤔 Try another game' : result === 'loser' ? 'You lost the game😔' : result === 'winner' ? 'You won the game🏆' : null}
           </Typography>
+          <Typography variant='body1' className={classes.dialog}>
+            {console.log(messages)}
+            You: {messages.filter(m => m.user === name).length > 0 && emoji(messages.filter(m => m.user === name)[0].message)}<br />
+          </Typography>
+          {messages.length > 0 && messages.filter(m => m.user !== name).map(m => (
+            <Typography variant='body1' className={classes.dialog}>
+              {m.user}: {emoji(m.message)}
+            </Typography>
+          ))}
         </DialogTitle>
       </Dialog>
       {users.length <= 1 && (
         <Dialog fullWidth aria-labelledby="simple-dialog-title" open={users.length <= 1}>
           <DialogTitle id="simple-dialog-title">
             <Typography variant='h4' className={classes.dialog}>
-              Sorry you are alone. Wait for someone to join this room.
+              Sorry you are alone. 😔Wait for someone to join this room.
             </Typography>
           </DialogTitle>
         </Dialog>
@@ -99,7 +123,7 @@ const Chat = ({ location }) => {
         <Dialog fullWidth aria-labelledby="simple-dialog-title" open={decided && !result}>
           <DialogTitle id="simple-dialog-title">
             <Typography variant='h4' className={classes.dialog}>
-              Wait for the others to make their choices.
+              Wait for the others to make their choices✋
             </Typography>
           </DialogTitle>
         </Dialog>
