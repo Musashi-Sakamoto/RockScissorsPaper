@@ -43,10 +43,8 @@ const Chat = ({ location }) => {
     setName(name);
 
     socket.on('message', (message) => {
-      console.log('result', message, name)
       setMessages(oldArray => [...oldArray, message])
       if (message.user === name && (message.text === 'draw' || message.text === 'winner' || message.text === 'loser')) {
-        console.log('result', message.text)
         setResult(message.text);
       }
     });
@@ -100,7 +98,6 @@ const Chat = ({ location }) => {
             {result === 'draw' ? 'Tie game🤔 Try another game' : result === 'loser' ? 'You lost the game😔' : result === 'winner' ? 'You won the game🏆' : null}
           </Typography>
           <Typography variant='body1' className={classes.dialog}>
-            {console.log(messages)}
             You: {messages.filter(m => m.user === name).length > 0 && emoji(messages.filter(m => m.user === name)[0].message)}<br />
           </Typography>
           {messages.length > 0 && messages.filter(m => m.user !== name).map(m => (
