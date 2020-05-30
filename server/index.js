@@ -64,7 +64,7 @@ io.on('connect', (socket) => {
       }
       
       messages.forEach(message => {
-        console.log(winner);
+        console.log(message);
         io.to(message.roomId).emit('message', { user: message.username, text: isEven ? 'draw' : winner === message.message ? 'winner' : 'loser' });
       });
     }

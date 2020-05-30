@@ -43,7 +43,10 @@ const Chat = ({ location }) => {
     setName(name);
 
     socket.on('message', (message) => {
+      console.log('result', message, name)
+
       if (message.user === name && (message.text === 'draw' || message.text === 'winner' || message.text === 'loser')) {
+        console.log('result', message.text)
         setResult(message.text);
       }
     });
