@@ -18,7 +18,8 @@ const Chat = ({ location }) => {
   const [users, setUsers] = useState('');
   const [decided, setDecided] = useState(false);
   const [result, setResult] = useState(null);
-  const ENDPOINT = 'https://rock-scissors-paper-634.herokuapp.com/';
+  // const ENDPOINT = 'https://rock-scissors-paper-634.herokuapp.com/';
+  const ENDPOINT = 'localhost:5000/'
 
   useEffect(() => {
     const { name, room } = queryString.parse(location.search);

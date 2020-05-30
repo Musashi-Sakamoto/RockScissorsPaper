@@ -1,40 +1,48 @@
 import React from 'react';
-import Carousel from 'react-material-ui-carousel';
-import { Card, Container, ButtonBase } from '@material-ui/core';
+import { Card, Grid, ButtonBase, Typography, makeStyles } from '@material-ui/core';
 
-import Rock from '../../icons/rock.png';
-import Scissors from '../../icons/scissors.png';
-import JapanesePaper from '../../icons/paper.png';
-
-import './Input.css';
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    textAlign: 'center',
+    fontSize: '10em',
+  },
+  container: {
+    textAlign: 'center'
+  },
+}));
 
 const Input = ({ sendMessage }) => {
-  const items = [
-    {
-      name: 'rock',
-      image: Rock,
-    },
-    {
-      name: 'scissors',
-      image: Scissors,
-    },
-    {
-      name: 'paper',
-      image: JapanesePaper,
-    },
-  ];
+  const classes = useStyles();
   return (
-    <Container className="container">
-      <Carousel fullHeightHover navButtonsAlwaysVisible autoPlay={false} animation="slide">
-        {items.map((item, i) => (
-          <ButtonBase key={i} className="buttonBase">
-            <Card onClick={sendMessage(item.name)} elevation={3} className="paper">
-              <img src={item.image} className="image" />
-            </Card>
-          </ButtonBase>
-        ))}
-      </Carousel>
-    </Container>
+    <Grid container>
+      <Grid item xs={12} sm={4} className={classes.container}>
+        <ButtonBase onClick={sendMessage('rock')}>
+          <Card elevation={3} className={classes.paper}>
+            <Typography variant="h1">
+            ✊
+            </Typography>
+          </Card>
+        </ButtonBase>
+      </Grid>
+      <Grid item xs={12} sm={4} className={classes.container}>
+        <ButtonBase onClick={sendMessage('scissors')}>
+          <Card elevation={3} className={classes.paper}>
+            <Typography variant="h1">
+            ✌
+            </Typography>
+          </Card>
+        </ButtonBase>
+      </Grid>
+      <Grid item xs={12} sm={4} className={classes.container}>
+        <ButtonBase onClick={sendMessage('paper')}>
+          <Card elevation={3} className={classes.paper}>
+            <Typography variant="h1">
+            ✋
+            </Typography>
+          </Card>
+        </ButtonBase>
+      </Grid>
+    </Grid>
   );
 };
 
