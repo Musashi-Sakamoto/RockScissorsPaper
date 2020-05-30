@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 const Input = ({ sendMessage }) => {
   const classes = useStyles();
   return (
-    <Grid container>
+    <Grid container spacing={3}>
       <Grid item xs={12} sm={4} className={classes.container}>
         <ButtonBase onClick={sendMessage('rock')}>
           <Card elevation={3} className={classes.paper}>
