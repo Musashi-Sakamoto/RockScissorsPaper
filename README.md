@@ -1,5 +1,5 @@
 # Rock Scissors Paper
-[![Image from Gyazo](https://i.gyazo.com/6bf2a19b916e7c12d9cda6fb446b468a.png)](https://gyazo.com/6bf2a19b916e7c12d9cda6fb446b468a)
+[![Image from Gyazo](https://i.gyazo.com/a51bedfe584a27e3beac0540b6eb6127.png)](https://gyazo.com/a51bedfe584a27e3beac0540b6eb6127)
 
 ### [Live Site](https://frosty-wozniak-9e9679.netlify.app)
 (You need at least more than or equal to 2 players)
